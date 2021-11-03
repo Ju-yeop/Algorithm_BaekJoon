@@ -7,22 +7,40 @@ for _ in range(h):
 
 for k in range(h - 7):
     for p in range(w - 7):
-        count = 0
+        wcount = 0
+        bcount = 0
         for i in range(8):
             for j in range(8):
-                if ls[k+i][p] == 'B':
-                    if j % 2 == 0:
-                        if ls[i + k][j + p] != 'B':
-                            count += 1
-                    elif j % 2 == 1:
-                        if ls[i + k][j + p] != 'W':
-                            count += 1
-                elif ls[k+i][p] == 'W':
-                    if j % 2 == 0:
-                        if ls[i + k][j + p] != 'W':
-                            count += 1
-                    elif j % 2 == 1:
-                        if ls[i + k][j + p] != 'B':
-                            count += 1
-        count_ls.append(count)
-print(count_ls)
+                if True:
+                    if i % 2 == 0:
+                        if j % 2 == 0:
+                            if ls[i + k][j + p] != 'B':
+                                bcount += 1
+                        elif j % 2 == 1:
+                            if ls[i + k][j + p] != 'W':
+                                bcount += 1
+                    elif i % 2 == 1:
+                        if j % 2 == 0:
+                            if ls[i + k][j + p] != 'W':
+                                bcount += 1
+                        elif j % 2 == 1:
+                            if ls[i + k][j + p] != 'B':
+                                bcount += 1
+                if True:
+                    if i % 2 == 0:
+                        if j % 2 == 0:
+                            if ls[i + k][j + p] != 'W':
+                                wcount += 1
+                        elif j % 2 == 1:
+                            if ls[i + k][j + p] != 'B':
+                                wcount += 1
+                    elif i % 2 == 1:
+                        if j % 2 == 0:
+                            if ls[i + k][j + p] != 'B':
+                                wcount += 1
+                        elif j % 2 == 1:
+                            if ls[i + k][j + p] != 'W':
+                                wcount += 1
+        count_ls.append(wcount)
+        count_ls.append(bcount)
+print(min(count_ls))
