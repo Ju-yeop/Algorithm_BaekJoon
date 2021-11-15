@@ -2,14 +2,14 @@ n, m = map(int, input().split())
 
 ls = []
 
-def dfs():
+def dfs(start):
     if len(ls) == m:
         print(' '.join(map(str, ls)))
         return
-    for i in range(1, n+1):
+    for i in range(start, n+1):
         if i not in ls:
             ls.append(i)
-            dfs()
+            dfs(i+1)
             ls.pop()
 
-dfs()
+dfs(1)
