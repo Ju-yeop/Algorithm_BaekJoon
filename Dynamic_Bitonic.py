@@ -10,7 +10,7 @@ for i in range(n):
 
 for p in range(n-1, -1, -1):
     for q in range(n-1, p, -1):
-        if ls[q] < ls[p] and dp2c[q] >= dp2[p]:
+        if ls[q] < ls[p] and dp2[q] >= dp2[p]:
             dp2[p] = dp2[q] + 1
 
 total_ls = [dp1[v] + dp2[v] for v in range(len(dp1))]
