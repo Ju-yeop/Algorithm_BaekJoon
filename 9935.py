@@ -34,3 +34,5 @@ for i in range(len(S)):
                 ls.pop()
 
 print(''.join(ls) if len(ls) != 0 else 'FRULA')
+
+#풀긴했는데 왜 스택쓰는게 더 빨라? 이중포문 쓰는데?
