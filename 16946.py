@@ -6,11 +6,16 @@ mrx = [list(map(int, stdin.readline().strip())) for _ in range(N)]
 visited = [[False for _ in range(M)] for _ in range(N)]
 result = [[0 for _ in range(M)] for _ in range(N)]
 move = [[0, 1], [0, -1], [-1, 0], [1, 0]]
+area = [[0 for _ in range(M)] for _ in range(N)]
+final = [[0 for _ in range(M)] for _ in range(N)]
+area_count = 1
 
-def bfs(x, y):
+def bfs(x, y, ar):
+    area[x][y] = ar
     ls = deque()
     ls.append([x, y])
     count = 1
+    visited[x][y] = True
     while True:
         if len(ls) == 0:
             break
@@ -22,6 +27,7 @@ def bfs(x, y):
                 if visited[move_x][move_y] is False and mrx[move_x][move_y] == 0:
                     visited[move_x][move_y] = True
                     ls.append([move_x, move_y])
+                    area[move_x][move_y] = ar
                     count += 1
 
     for v in range(N):
@@ -31,13 +37,43 @@ def bfs(x, y):
     return count % 10
 
 
+area_value ={}
 for p in range(N):
     for q in range(M):
-        if mrx[p][q] == 0:
-            pass
-        else:
-            result[p][q] = bfs(p, q)
-        print(result[p][q], end='')
+        if mrx[p][q] == 0 and area[p][q] == 0:
+            temp = bfs(p, q, area_count)   # area pq 가 같은 것 끼리는 count가 0이 아닌 인덱스의 값으로 전부 바꿔
+            area_value[area_count] = temp
+            area_count += 1
+
+
+#BFS 횟수는 확실히 줄긴하는데...
+
+
+for i in area_value.keys():
+    for j in range(N):
+        for v in range(M):
+            if area[j][v] == i:
+                result[j][v] = area_value[i]
+
+
+for i in range(N):
+    for j in range(M):
+        judge = []
+        if result[i][j] == 0:
+            x, y = i, j
+            for v in range(4):
+                n_x = x + move[v][0]
+                n_y = y + move[v][1]
+                if (-1 < n_x < N) and (-1 < n_y < M):
+                    if area[n_x][n_y] not in judge:
+                        final[i][j] += result[n_x][n_y]
+                        judge.append(area[n_x][n_y])
+            final[i][j] += 1
+
+
+for i in range(N):
+    for j in range(M):
+        print(final[i][j], end='')
     print()
 
 """
