@@ -37,7 +37,7 @@ def bfs(x, y, ar):
     return count % 10
 
 
-area_value ={}
+area_value = {}
 for p in range(N):
     for q in range(M):
         if mrx[p][q] == 0 and area[p][q] == 0:
