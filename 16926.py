@@ -11,24 +11,24 @@ for _ in range(R):
         temp = mrx[front][back]
         for j in range(i + 1, N - i):
             front = j
-            previous = mrx[front][back]
+            next = mrx[front][back]
             mrx[front][back] = temp
-            temp = previous
+            temp = next
         for j in range(i + 1, M - i):
             back = j
-            previous = mrx[front][back]
+            next = mrx[front][back]
             mrx[front][back] = temp
-            temp = previous
+            temp = next
         for j in range(i + 1, N - i):
             front = N - j - 1
-            previous = mrx[front][back]
+            next = mrx[front][back]
             mrx[front][back] = temp
-            temp = previous
+            temp = next
         for j in range(i + 1, M - i):
-            back = M - j -1
-            previous = mrx[front][back]
+            back = M - j - 1
+            next = mrx[front][back]
             mrx[front][back] = temp
-            temp = previous
+            temp = next
 
 for i in range(N):
     for j in range(M):
