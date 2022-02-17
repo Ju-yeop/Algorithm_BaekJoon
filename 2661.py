@@ -1,3 +1,5 @@
+#좋은 수열
+
 from sys import stdin
 
 N = int(stdin.readline().strip())
@@ -13,7 +15,7 @@ def comparison():     #겹치는 부분수열이 있는지 확인
             return judge
 
 
-def b_t(depth, ls):
+def b_t(depth, ls):     #알고리즘은 맞았는데 구현 실패...
     if comparison():
         return False
     if depth == N:
