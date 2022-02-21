@@ -32,14 +32,14 @@ for i in range(M):
     for j in range(N):
         if tomato[i][j] == 0:
             print(-1)
-            exit(1)          #break -> 틀렸습니다     exit(1) -> 런타임에러(NZEC)
+            exit(0)          #break -> 틀렸습니다     exit(1) -> 런타임에러(NZEC)
         else:                #<sys.exit() -> 프로그램 종료,  exit() -> 쉘에서 사용>
             result = max(tomato[i][j], result)
 
 print(result-1)  #첫 시작을 1로 설정했기 때문에 -1
 
 """
-result = max(max(tomato)) - 1  ㅡ> 틀렸습니다? 11.11 반례
+result = max(max(tomato)) - 1  ㅡ> 틀렸습니다? 11.11 반례    ->     result = max(map(max, tomato))
 print(max(tomato))
 print(tomato)
 """

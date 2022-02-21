@@ -6,7 +6,7 @@ road = [list(map(int, stdin.readline().strip())) for _ in range(N)]
 move = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 visited = [[False for _ in range(M)] for _ in range(N)]
 
-def bfs(x, y):
+def dfs(x, y):
     distance = 0
     bifurcation_distance = 0   #분기점까지의 거리
     dq = deque()

@@ -9,7 +9,7 @@ move = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 temp[0][0] = 1
 result = []
 
-def bfs(temp):
+def dfs(temp):
     dq = deque()
     dq.append([0, 0])
     while dq:
@@ -31,12 +31,12 @@ for i in range(N):
         if road[i][j] == 1:
             temp = copy.copy(road)
             road[i][j] = 0
-            value = bfs(temp)
+            value = dfs(temp)
             if temp[N-1][M-1] != 0:
                 result.append(value)
             road[i][j] = 1
 
-f = bfs(road)
+f = dfs(road)
 if f != 0:
     result.append(f)
 if len(result) == 0:
@@ -45,3 +45,4 @@ else:
     print(min(result))
 
 # 토마토 알고리즘에서 조건만 조금 바꿨고 벽은 하나씩 부숴가면서 거리 전부 체크 -> 21% 틀렸습니다
+# 지금 생각해보니까 나 왜 bfs를 dfs라고 생각하고 풀었냐 미친...이렇게 해도 최단거리는 풀리긴 하는데 필요없는 조건이 들어가네
