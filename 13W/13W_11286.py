@@ -8,9 +8,9 @@ min_heap_p = []
 for _ in range(N):
     x = int(stdin.readline().strip())
     if x > 0:
-        heapq.heappush(min_heap_p, x)
+        heapq.heappush(min_heap_p, x) #양수면 최소힙
     elif x < 0:
-        heapq.heappush(max_heap_m, -x)
+        heapq.heappush(max_heap_m, -x) #음수면 최대힙
     elif x == 0:
         if not max_heap_m and min_heap_p:
             print(heapq.heappop(min_heap_p))
