@@ -16,10 +16,10 @@ for i in range(1, len(A)+1):
 X, Y = len(A), len(B)
 
 while X>0 and Y>0:
-    if dp[X][Y-1] == dp[X][Y]:
-        Y -= 1
-    elif dp[X-1][Y] == dp[X][Y]:
+    if dp[X-1][Y] == dp[X][Y]:
         X -= 1
+    elif dp[X][Y-1] == dp[X][Y]:
+        Y -= 1
     else:
         result.append(A[X-1])
         X -= 1
