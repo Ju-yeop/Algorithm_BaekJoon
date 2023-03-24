@@ -1,2 +1,2 @@
-ls = [1,5,8,9,2,4,7]
-print(ls[-3:] + [1,2,3])
+ls = list("afsasfasf")
+print(ls)
