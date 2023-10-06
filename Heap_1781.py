@@ -16,31 +16,23 @@ ls = []
 hq = []
 flag = 0
 for _ in range(n):
-    x, y = map(int, stdin.readline().split())
-    flag = max(flag, y)
-    ls.append([x, y])
-    hq.append([-y, x])
+    dead, cup = map(int, stdin.readline().split())
+    flag = max(flag, dead)
+    heapq.heappush(ls, [-dead, cup])
 
-heapq.heapify(hq)
-heapq.heapify(ls)
-cnt = 0
 result = 0
 
-while cnt <= flag:
-    cnt += 1
-    mx = 0
+while flag > 0:
+
     while ls:
-        popItem = heapq.heappop(ls)
-        rItem = heapq.heappop(hq)
-        if popItem[0] <= cnt:
-            mx = max(mx, popItem[1])
+        item = heapq.heappop(ls)
+        if -item[0] >= flag:
+            heapq.heappush(hq, -item[1])
         else:
-            if len(hq) == 0:
-                mx = -heapq.heappop(rItem)
-                
-            heapq.heappush(ls, popItem)
-            heapq.heappush(hq, rItem)
+            heapq.heappush(ls, item)
             break
-    result += mx
+    if hq:
+        result += (-heapq.heappop(hq))
+    flag -= 1
 
 print(result)
