@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 /*
@@ -39,6 +40,7 @@ public class BFS_15591 {
             ar.add(new ArrayList<>());
         }
 
+
         for (int i = 0; i < N-1; i++){
             st = new StringTokenizer(br.readLine());
             int p = Integer.parseInt(st.nextToken());
@@ -47,6 +49,7 @@ public class BFS_15591 {
             ar.get(p).add(new Node(q, r));
             ar.get(q).add(new Node(p, r));
         }
+
 
         for (int i = 0; i < Q; i++){
             st = new StringTokenizer(br.readLine());
