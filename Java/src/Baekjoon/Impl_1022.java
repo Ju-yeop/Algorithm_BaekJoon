@@ -1,9 +1,7 @@
 package Baekjoon;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.StringTokenizer;
 
 /*
@@ -19,7 +17,7 @@ import java.util.StringTokenizer;
 
  -3 -3 2 0
  */
-public class Deque_1022{
+public class Impl_1022 {
     private static int r1, c1, r2, c2, max = 0;
     private static int[][] map;
     private static int[] dx = {0, -1, 0, 1};
