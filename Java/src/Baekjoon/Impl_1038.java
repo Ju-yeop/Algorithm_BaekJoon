@@ -13,12 +13,16 @@ public class Impl_1038 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-
-        for (int i = 0; i < 10; i++){
-            recur(0, i);
+        if (N > 1022){
+            System.out.println("-1");
+        } else{
+            for (int i = 0; i < 10; i++){
+                recur(0, i);
+            }
+            Collections.sort(ls);
+            System.out.println(ls.get(N));
         }
-        Collections.sort(ls);
-        System.out.println(ls.get(N));
+
     }
 
     private static void recur(int size, long num){
