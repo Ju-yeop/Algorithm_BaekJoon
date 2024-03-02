@@ -3,96 +3,96 @@ package Baekjoon;
 import java.io.*;
 import java.util.*;
 
+/*
+7 7
+2 0 0 0 1 1 0
+0 0 1 0 1 2 0
+0 1 1 0 1 0 0
+0 1 0 0 0 0 0
+0 0 0 0 0 1 1
+0 1 0 0 0 0 0
+0 1 0 0 0 0 0
+ */
+
 public class BFS_14502 {
-    static int[] di = { 1, -1, 0, 0 };
-    static int[] dj = { 0, 0, 1, -1 };
+    static int[] dx = {1, -1, 0, 0};
+    static int[] dy = {0, 0, 1, -1};
     static int N, M;
-    static int[][] map;
-    static int[][] result = new int[3][2];
-    static int res = Integer.MIN_VALUE;
-    static int zeroCnt;
-    static ArrayList<int[]> twos = new ArrayList<int[]>();
+    static int[][] board;
+    static int result = 0;
+    static StringTokenizer st;
+    static ArrayList<int[]> virus = new ArrayList<>();
+    static Stack<Integer> comb = new Stack<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        map = new int[N][M];
-        zeroCnt = 0;
+        board = new int[N][M];
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
+                board[i][j] = Integer.parseInt(st.nextToken());
 
-                if (map[i][j] == 2)
-                    twos.add(new int[] { i, j });
-                else if (map[i][j] == 0)
-                    zeroCnt++;
+                if (board[i][j] == 2) virus.add(new int[] {i, j});
             }
         }
-
-
-        combi(0, 0);
-        System.out.println(res);
+        dfs(0, -1);
+        System.out.println(result);
     }
 
-    static void combi(int idx, int start) {
-        if (idx == 3) {
-            int[][] newMap = new int[N][M];
-
-            for (int i = 0; i < N; i++) {
-                newMap[i] = map[i].clone();
-            }
-            for (int[] r : result) {
-                newMap[r[0]][r[1]] = 1;
-            }
-            int tmp = fillTwo(newMap, zeroCnt - 3);
-            res = Math.max(res, tmp);
+    static void dfs(int depth, int last){
+        if (depth == 3){
+            result = Math.max(result, bfs());
             return;
         }
-
-        for (int i = start; i < N * M; i++) {
-            int r = i / M;
-            int c = i % M;
-            if (map[r][c] == 0) {
-                result[idx][0] = r;
-                result[idx][1] = c;
-                combi(idx + 1, i + 1);
-            }
+        for (int i = last + 1; i < N * M; i++){
+            comb.add(i);
+            dfs(depth + 1, i);
+            comb.pop();
         }
     }
 
-    static int fillTwo(int[][] newMap, int zeroCnt) {
-        boolean[][] visit = new boolean[N][M];
-        Queue<int[]> q = new LinkedList<>();
+    static int bfs(){
+        for (int i = 0; i < 3; i++) {
+            int x = comb.get(i) / M;
+            int y = comb.get(i) % M;
+            if (board[x][y] != 0)
+                return 0;
+        }
 
-        for (int[] pair : twos) {
-            // start bfs
-            if (!visit[pair[0]][pair[1]]) {
-                q.offer(pair);
-                visit[pair[0]][pair[1]] = true;
-                while (!q.isEmpty()) {
-                    int[] tmp = q.poll();
-                    int i = tmp[0];
-                    int j = tmp[1];
-                    for (int n = 0; n < 4; n++) {
-                        int ni = i + di[n];
-                        int nj = j + dj[n];
+        int[][] check = new int[N][M];
+        for (int i = 0 ; i < N; i++){
+            for (int j = 0; j < M; j++){
+                check[i][j] = board[i][j];
+            }
+        }
 
-                        if (ni < 0 || ni >= N || nj < 0 || nj >= M)
-                            continue;
+        for (int i = 0; i < 3; i++){
+            check[comb.get(i) / M][comb.get(i) % M] = 1;
+        }
 
-                        if (newMap[ni][nj] != 0 || visit[ni][nj])
-                            continue;
+        ArrayDeque<int[]> dq = new ArrayDeque<>(virus);
 
-                        q.offer(new int[] { ni, nj });
-                        visit[ni][nj] = true;
-                        newMap[ni][nj] = 2;
-                        zeroCnt -= 1;
+        while(!dq.isEmpty()){
+            int[] temp = dq.poll();
+            for (int i = 0; i < 4; i++){
+                int mx = temp[0] + dx[i];
+                int my = temp[1] + dy[i];
+                if (-1 < mx && mx < N && -1 < my && my < M){
+                    if (check[mx][my] == 0){
+                        check[mx][my] = 2;
+                        dq.add(new int[]{mx, my});
                     }
                 }
+            }
+        }
+        int zeroCnt = 0;
+        for (int i = 0; i < N; i++){
+            for (int j = 0; j < M; j++){
+                if (check[i][j] == 0) zeroCnt ++;
             }
         }
         return zeroCnt;
