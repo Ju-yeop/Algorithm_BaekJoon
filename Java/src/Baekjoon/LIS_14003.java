@@ -10,60 +10,55 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class LIS_14003 {
     static int N;
-    static int[] ls, idxAr;
-    static ArrayList<Integer> result = new ArrayList<>();
-    static ArrayDeque<Integer> answer = new ArrayDeque<>();
+    static int[] arr, dpIdx;
+    static ArrayList<Integer> dp = new ArrayList<>();
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader((new InputStreamReader(System.in)));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
-        ls = new int[N];
-        idxAr = new int[N];
-        for (int i = 0; i < N; i++){
-            ls[i] = Integer.parseInt(st.nextToken());
-        }
+        arr = new int[N];
+        dpIdx = new int[N];
+        for(int i = 0; i < N; i++) arr[i] = Integer.parseInt(st.nextToken());
 
-        result.add(ls[0]);
-        idxAr[0] = 0;
-        for (int i = 1; i < N; i++){
-            if (ls[i] > result.get(result.size() - 1)){
-                result.add(ls[i]);
-                idxAr[i] = result.size() - 1;
+        dp.add(arr[0]);
+        for(int i = 1; i < N; i++){
+            if (arr[i] > dp.get(dp.size() - 1)){
+                dpIdx[i] = dp.size();
+                dp.add(arr[i]);
             }
-            else {
-                int keyIdx = lowerBound(ls[i]);
-                idxAr[i] = keyIdx;
-                result.set(keyIdx, ls[i]);
+            else{
+                int targetIdx = lowerBound(arr[i]);
+                dpIdx[i] = targetIdx;
+                dp.set(targetIdx, arr[i]);
             }
         }
 
-        int flag = result.size() - 1;
-        for (int i = N - 1; i >= 0; i--){
-            if (idxAr[i] == flag){
-                answer.addFirst(ls[i]);
-                flag --;
+        System.out.println(dp.size());
+        int temp = dp.size() - 1;
+        Stack<Integer> stack = new Stack<>();
+        for(int i = N-1; i > -1; i--){
+            if (dpIdx[i] == temp) {
+                stack.add(arr[i]);
+                temp--;
             }
         }
-        System.out.println(result.size());
-        while(!answer.isEmpty()){
-            int temp = answer.poll();
-            System.out.print(temp + " ");
-        }
-
+        while(!stack.isEmpty()) System.out.print(stack.pop() + " ");
     }
 
-    static int lowerBound(int key){
-        int left = 0;
-        int right = result.size();
-        while (left < right){
-            int mid = (left + right) / 2;
-            if (result.get(mid) < key) left = mid + 1;
-            else right = mid;
+    static int lowerBound(int target){
+        int start = 0;
+        int end = dp.size();
+        int mid;
+        while (start < end){
+            mid = (start + end) / 2;
+            if (target > dp.get(mid)) start = mid + 1;
+            else end = mid;
         }
-        return right;
+        return end;
     }
 }
